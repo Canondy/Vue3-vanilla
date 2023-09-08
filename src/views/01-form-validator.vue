@@ -1,58 +1,3 @@
-# Vue3-vanilla
-
-## 使用Vue3重构VanillaWebProjects
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### 安装Element-Plus
-
-```sh
-pnpm install element-plus 
-```
-
-### 按需引入
-
-```sh
-pnpm install -D unplugin-vue-components unplugin-auto-import 
-```
-
-### vite.config.js 添加配置文件
-```js
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
-// plugins 中添加以下配置
-AutoImport({
-    resolvers: [ElementPlusResolver()],
-}),
-Components({
-    resolvers: [ElementPlusResolver()],
-})
-```
-##  01-form-validator   Vue3 写的第一个页面    O(∩_∩)O哈哈哈~~~
-
-### 先看效果 
-![01-form-validator.png](src%2Fassets%2F01-form-validator.png)
-
-### 代码上手
-```vue 
 <script setup>
 import { reactive, toRefs } from "vue";
 import { getCurrentInstance } from 'vue';
@@ -100,7 +45,7 @@ proxy.reset = () => {
     password: undefined,
     pwd: undefined
   },
-  proxy.resetForm('registerRef')
+      proxy.resetForm('registerRef')
 }
 
 const submit = () =>{
@@ -164,12 +109,3 @@ h2 {
   margin: 20px 0;
 }
 </style>
-
-```
-
-### 总结
-* 使用 pnpm创建 Vue3项目 引入Element-Plus  设置按需引入   vite.config.js 添加配置信息
-* 使用 Vue3中的 getCurrentInstance()  reactive() toRefs() 新特性 
-* 使用 箭头函数  const funName = （） => {}   多用
-* 使用 正则表达式 对表单进行验证
-
