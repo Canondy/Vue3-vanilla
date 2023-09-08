@@ -27,3 +27,30 @@ pnpm dev
 ```sh
 pnpm build
 ```
+
+### 安装Element-Plus
+
+```sh
+pnpm install element-plus 
+```
+
+### 按需引入
+
+```sh
+pnpm install -D unplugin-vue-components unplugin-auto-import 
+```
+
+### vite.config.js 添加配置文件
+```js
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+// plugins 中添加以下配置
+AutoImport({
+    resolvers: [ElementPlusResolver()],
+}),
+Components({
+    resolvers: [ElementPlusResolver()],
+})
+```
