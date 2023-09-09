@@ -30,7 +30,7 @@ const data = reactive({
   }
 })
 
-const { form, rules} = toRefs(data)
+const { form, rules } = toRefs(data)
 
 proxy.resetForm = (refName) => {
   if (proxy.$refs[refName]) {
@@ -52,6 +52,11 @@ const submit = () =>{
   proxy.$refs.registerRef.validate(valid => {
     if (form.value.password !== form.value.pwd) {
       console.log('password:' + form.value.password + '  pwd:' + form.value.pwd)
+      // 这里不要导入 import {ElMessage} from "element-plus";
+      // 否则 element 样式效果会消失
+      // 博客地址：https://juejin.cn/post/7247428110163984421
+      // 解决办法： 在tsconfig.json中的include字段中添加auto-imports.d.ts就可以了,这样就会自动引入了。
+      // "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts"],
       ElMessage.error('两次输入的密码必须相同')
     }
     if (valid && form.value.password === form.value.pwd) {

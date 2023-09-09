@@ -2,6 +2,12 @@
 
 ## 使用Vue3重构VanillaWebProjects
 
+## Use   pnpm    Create Vue3  Project 
+
+```sh
+pnpm create vite
+````
+
 ## Project Setup
 
 ```sh
@@ -85,7 +91,7 @@ const data = reactive({
   }
 })
 
-const { form, rules} = toRefs(data)
+const { form, rules } = toRefs(data)
 
 proxy.resetForm = (refName) => {
   if (proxy.$refs[refName]) {
