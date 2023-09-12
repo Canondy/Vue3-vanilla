@@ -95,14 +95,16 @@ h2 {
   text-align: center
 }
 .el-form {
-  height: 700px;
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  max-height: 700px;
+  max-width: 400px;
+  position:absolute;
+  left:0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
   padding: 30px 40px;
-  border: 3px solid #9d4fec;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .el-input {
   height: 50px;

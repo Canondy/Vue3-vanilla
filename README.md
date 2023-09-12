@@ -52,7 +52,7 @@ Components({
     resolvers: [ElementPlusResolver()],
 })
 ```
-##  01-form-validator   Vue3 写的第一个页面    O(∩_∩)O哈哈哈~~~
+##  [01-form-validator   Vue3 写的第一个页面    O(∩_∩)O哈哈哈~~~](src%2Fviews%2F01-form-validator.vue)
 
 ### 先看效果 
 ![01-form-validator.png](src%2Fassets%2F01-form-validator.png)
@@ -60,69 +60,74 @@ Components({
 ### 代码上手
 ```vue 
 <script setup>
-import { reactive, toRefs } from "vue";
-import { getCurrentInstance } from 'vue';
+  import { reactive, toRefs } from "vue";
+  import { getCurrentInstance } from 'vue';
 
-const { proxy } = getCurrentInstance();
+  const { proxy } = getCurrentInstance();
 
-const data = reactive({
-  form: {
-    username: '',
-    email: '',
-    password: '',
-    pwd: ''
-  },
-  rules: {
-    username: [
-      { required: true, message: 'Please enter username', trigger: 'blur' }
-    ],
-    email: [
-      { required: true, message: 'Please enter email', trigger: 'blur' },
-      { pattern: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/, message: '请输入正确的邮箱格式', trigger: 'blur' }
-    ],
-    password: [
-      { required: true, message: 'Please enter password', trigger: 'blur' },
-      { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: '长度至少为8位 字母 数字 特殊字符 @$!%*?&', trigger: 'blur' }
-    ],
-    pwd: [
-      { required: true, message: 'Please enter password', trigger: 'blur' },
-      { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: '长度至少为8位 字母 数字 特殊字符 @$!%*?&', trigger: 'blur' }
-    ]
-  }
-})
-
-const { form, rules } = toRefs(data)
-
-proxy.resetForm = (refName) => {
-  if (proxy.$refs[refName]) {
-    proxy.$refs[refName].resetFields();
-  }
-}
-
-proxy.reset = () => {
-  form.value = {
-    username: undefined,
-    email: undefined,
-    password: undefined,
-    pwd: undefined
-  },
-  proxy.resetForm('registerRef')
-}
-
-const submit = () =>{
-  proxy.$refs.registerRef.validate(valid => {
-    if (form.value.password !== form.value.pwd) {
-      console.log('password:' + form.value.password + '  pwd:' + form.value.pwd)
-      ElMessage.error('两次输入的密码必须相同')
-    }
-    if (valid && form.value.password === form.value.pwd) {
-      console.log('password:' + form.value.password + '  pwd:' + form.value.pwd)
-      ElMessage({ message: '注册成功', type: 'success' })
-      proxy.reset()
-      // 携带 注册信息 走登录接口
+  const data = reactive({
+    form: {
+      username: '',
+      email: '',
+      password: '',
+      pwd: ''
+    },
+    rules: {
+      username: [
+        { required: true, message: 'Please enter username', trigger: 'blur' }
+      ],
+      email: [
+        { required: true, message: 'Please enter email', trigger: 'blur' },
+        { pattern: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/, message: '请输入正确的邮箱格式', trigger: 'blur' }
+      ],
+      password: [
+        { required: true, message: 'Please enter password', trigger: 'blur' },
+        { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: '长度至少为8位 字母 数字 特殊字符 @$!%*?&', trigger: 'blur' }
+      ],
+      pwd: [
+        { required: true, message: 'Please enter password', trigger: 'blur' },
+        { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: '长度至少为8位 字母 数字 特殊字符 @$!%*?&', trigger: 'blur' }
+      ]
     }
   })
-}
+
+  const { form, rules } = toRefs(data)
+
+  proxy.resetForm = (refName) => {
+    if (proxy.$refs[refName]) {
+      proxy.$refs[refName].resetFields();
+    }
+  }
+
+  proxy.reset = () => {
+    form.value = {
+      username: undefined,
+      email: undefined,
+      password: undefined,
+      pwd: undefined
+    },
+        proxy.resetForm('registerRef')
+  }
+
+  const submit = () =>{
+    proxy.$refs.registerRef.validate(valid => {
+      if (form.value.password !== form.value.pwd) {
+        console.log('password:' + form.value.password + '  pwd:' + form.value.pwd)
+        // 这里不要导入 import {ElMessage} from "element-plus";
+        // 否则 element 样式效果会消失
+        // 博客地址：https://juejin.cn/post/7247428110163984421
+        // 解决办法： 在tsconfig.json中的include字段中添加auto-imports.d.ts就可以了,这样就会自动引入了。
+        // "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "auto-imports.d.ts"],
+        ElMessage.error('两次输入的密码必须相同')
+      }
+      if (valid && form.value.password === form.value.pwd) {
+        console.log('password:' + form.value.password + '  pwd:' + form.value.pwd)
+        ElMessage({ message: '注册成功', type: 'success' })
+        proxy.reset()
+        // 携带 注册信息 走登录接口
+      }
+    })
+  }
 </script>
 
 <template>
@@ -147,30 +152,31 @@ const submit = () =>{
 </template>
 
 <style scoped>
-h2 {
-  text-align: center
-}
-.el-form {
-  height: 700px;
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  padding: 30px 40px;
-  border: 3px solid #9d4fec;
-}
-.el-input {
-  height: 50px;
-  margin: 0 0 30px;
-}
-.el-button {
-  width: 400px;
-  height: 50px;
-  margin: 20px 0;
-}
+  h2 {
+    text-align: center
+  }
+  .el-form {
+    max-height: 700px;
+    max-width: 400px;
+    position:absolute;
+    left:0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    padding: 30px 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .el-input {
+    height: 50px;
+    margin: 0 0 30px;
+  }
+  .el-button {
+    width: 400px;
+    height: 50px;
+    margin: 20px 0;
+  }
 </style>
-
 ```
 
 ### 总结
@@ -179,7 +185,7 @@ h2 {
 * 使用 箭头函数  const funName = （） => {}   多用
 * 使用 正则表达式 对表单进行验证
 
-## 02-NewYearCountdown  新年倒计时
+## [02-NewYearCountdown  新年倒计时](src%2Fviews%2F02-NewYearCountdown.vue)
 
 ### 先看效果
 ![02-NewYearCountdown.png](src%2Fassets%2F02-NewYearCountdown.png)
@@ -253,7 +259,7 @@ setInterval(changeDays,1000)
 }
 
 body {
-  background: url('./../assets/picture/fire.png') no-repeat center center;
+  background: url('//assets/picture/fire.png') no-repeat center center;
   background-size: 100% 100%;
   height: 100vh;
   color: #fff;
